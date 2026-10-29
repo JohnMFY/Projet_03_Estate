@@ -14,38 +14,32 @@ PostgreSQL 17
 
 Créer une base de données PostgreSQL nommée :
 
-```
 estate
-```
 
-Le projet utilise Maven Wrapper, il n'est donc pas nécessaire d'installer Maven.
-
-## Launch Backend
-
-Ouvrir le projet dans Visual Studio Code puis ouvrir un terminal dans le dossier :
-
-Backend
-
-Définir le mot de passe PostgreSQL :
-
-```
-$env:DB_PASSWORD="VOTRE_MOT_DE_PASSE"
-```
+### Configuration JWT
 
 Créer une clé JWT :
-
-```
+```console
 $bytes = New-Object byte[] 32
 $rng = [System.Security.Cryptography.RandomNumberGenerator]::Create()
 $rng.GetBytes($bytes)
-$env:JWT_SECRET = [Convert]::ToBase64String($bytes)
+$jwtSecret = [Convert]::ToBase64String($bytes)
 $rng.Dispose()
+
+[Environment]::SetEnvironmentVariable("JWT_SECRET", $jwtSecret, "User")
+```
+Relancer VS Code
+
+## Launch Backend
+
+```console
+cd Backend
 ```
 
-Lancer le backend :
+Rentrer son mot de passe PostgreSQL et lancer le backend :
 
-```
-$env:DB_PASSWORD="VOTRE_MOT_DE_PASSE"
+```console
+$env:DB_PASSWORD="MOT_DE_PASSE"
 .\mvnw.cmd spring-boot:run
 ```
 
