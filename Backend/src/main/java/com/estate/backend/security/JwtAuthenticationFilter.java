@@ -50,7 +50,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             String email = jwtService.extractEmail(token);
 
-            User user = userRepository.findByEmail(email).orElse(null);
+            User user = userRepository
+                .findByEmail(email)
+                .orElse(null);
 
             if (user != null) {
                 UsernamePasswordAuthenticationToken authentication =
@@ -60,11 +62,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         Collections.emptyList()
                     );
 
-                SecurityContextHolder.getContext()
+                SecurityContextHolder
+                    .getContext()
                     .setAuthentication(authentication);
             }
 
-        } catch (JwtException | IllegalArgumentException ignored) {
+        } catch (JwtException | IllegalArgumentException e) {
+            e.printStackTrace();
         }
 
         filterChain.doFilter(request, response);

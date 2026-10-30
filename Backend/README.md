@@ -1,6 +1,6 @@
 # Estate Backend
 
-Backend de l'application Estate développé avec Spring Boot, GraphQL, Spring Security, JPA/Hibernate et PostgreSQL.
+Backend de l'application Estate développé avec Spring Boot, REST, Spring Security, JPA/Hibernate et PostgreSQL.
 
 ## Install Backend
 

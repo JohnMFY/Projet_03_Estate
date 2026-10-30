@@ -2,18 +2,22 @@ package com.estate.backend.controller;
 
 import com.estate.backend.dto.AuthPayload;
 import com.estate.backend.dto.LoginInput;
-import com.estate.backend.dto.UserPayload;
 import com.estate.backend.entity.User;
 import com.estate.backend.security.JwtService;
 import com.estate.backend.service.AuthService;
 
-import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.MutationMapping;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import com.estate.backend.dto.UserPayload;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@RestController
+@RequestMapping("/api/auth")
 public class AuthController {
 
     private final AuthService authService;
@@ -24,29 +28,26 @@ public class AuthController {
         this.jwtService = jwtService;
     }
 
-    @MutationMapping
-    public AuthPayload login(@Argument LoginInput input) {
+    @PostMapping("/login")
+    public ResponseEntity<AuthPayload> login(@RequestBody LoginInput input) {
 
         User user = authService.authenticate(input);
 
         String token = jwtService.generateToken(user);
 
-        return new AuthPayload(token);
+        return ResponseEntity.ok(new AuthPayload(token));
     }
+    @GetMapping("/me")
+    public ResponseEntity<UserPayload> me(@AuthenticationPrincipal User user) {
 
-    @QueryMapping
-    public UserPayload me(@AuthenticationPrincipal User user) {
-
-        if (user == null) {
-            throw new RuntimeException("Unauthorized");
-        }
-
-        return new UserPayload(
+        UserPayload payload = new UserPayload(
             user.getId().intValue(),
             user.getName(),
             user.getEmail(),
             user.getCreatedAt() != null ? user.getCreatedAt().toString() : null,
             user.getUpdatedAt() != null ? user.getUpdatedAt().toString() : null
         );
+
+        return ResponseEntity.ok(payload);
     }
 }
