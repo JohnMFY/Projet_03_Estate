@@ -6,6 +6,8 @@ import com.estate.backend.repository.UserRepository;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.estate.backend.dto.RegisterInput;
+import java.time.LocalDateTime;
 
 @Service
 public class AuthService {
@@ -31,5 +33,28 @@ public class AuthService {
         }
 
         return user;
+    }
+
+    public User register(RegisterInput input) {
+
+        if (userRepository.existsByEmail(input.getEmail())) {
+            throw new IllegalArgumentException("Email already exists");
+        }
+
+        User user = new User();
+
+        user.setName(input.getName());
+        user.setEmail(input.getEmail());
+
+        user.setPassword(
+            passwordEncoder.encode(input.getPassword())
+        );
+
+        LocalDateTime now = LocalDateTime.now();
+
+        user.setCreatedAt(now);
+        user.setUpdatedAt(now);
+
+        return userRepository.save(user);
     }
 }

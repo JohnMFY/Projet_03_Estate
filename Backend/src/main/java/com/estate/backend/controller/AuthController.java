@@ -16,6 +16,9 @@ import com.estate.backend.dto.UserPayload;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.estate.backend.dto.RegisterInput;
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -50,4 +53,15 @@ public class AuthController {
 
         return ResponseEntity.ok(payload);
     }
+    @PostMapping("/register")
+        public ResponseEntity<AuthPayload> register(
+            @Valid @RequestBody RegisterInput input
+        ) {
+
+            User user = authService.register(input);
+
+            String token = jwtService.generateToken(user);
+
+            return ResponseEntity.ok(new AuthPayload(token));
+        }
 }
