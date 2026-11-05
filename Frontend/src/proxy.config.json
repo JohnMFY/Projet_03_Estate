@@ -7,14 +7,22 @@
         "target": "http://localhost:8080",
         "secure": false
     },
+    "/api/auth/register": {
+        "target": "http://localhost:8080",
+        "secure": false
+    },
+    "/api/user/**": {
+        "target": "http://localhost:8080",
+        "secure": false
+    },
+    "/api/messages": {
+        "target": "http://localhost:8080",
+        "secure": false
+    },
     "/api/**": {
         "target": "http://localhost:3001",
         "secure": false,
         "changeOrigin": true,
         "logLevel": "debug"
-    },
-    "/api/auth/register": {
-        "target": "http://localhost:8080",
-        "secure": false
     }
 }

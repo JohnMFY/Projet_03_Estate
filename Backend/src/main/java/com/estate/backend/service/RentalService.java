@@ -3,12 +3,12 @@ package com.estate.backend.service;
 import com.estate.backend.dto.RentalPayload;
 import com.estate.backend.entity.Rental;
 import com.estate.backend.repository.RentalRepository;
-
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-
 import java.util.Optional;
+import com.estate.backend.dto.RentalCreateInput;
+import com.estate.backend.entity.User;
+import java.time.LocalDateTime;
 
 @Service
 public class RentalService {
@@ -46,5 +46,30 @@ public class RentalService {
 
         return rentalRepository.findById(id)
             .map(this::toPayload);
+    }
+    public Rental createRental(
+        RentalCreateInput input,
+        User owner
+    ) {
+
+        Rental rental = new Rental();
+
+        rental.setName(input.getName());
+        rental.setSurface(input.getSurface());
+        rental.setPrice(input.getPrice());
+
+        rental.setPicture(//min IO next
+            input.getPicture().getOriginalFilename()
+        );
+
+        rental.setDescription(input.getDescription());
+        rental.setOwner(owner);
+
+        LocalDateTime now = LocalDateTime.now();
+
+        rental.setCreatedAt(now);
+        rental.setUpdatedAt(now);
+
+        return rentalRepository.save(rental);
     }
 }
