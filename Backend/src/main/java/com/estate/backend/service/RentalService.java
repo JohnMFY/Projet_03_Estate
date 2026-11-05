@@ -9,6 +9,8 @@ import java.util.Optional;
 import com.estate.backend.dto.RentalCreateInput;
 import com.estate.backend.entity.User;
 import java.time.LocalDateTime;
+import com.estate.backend.dto.RentalUpdateInput;
+import org.springframework.security.access.AccessDeniedException;
 
 @Service
 public class RentalService {
@@ -71,5 +73,35 @@ public class RentalService {
         rental.setUpdatedAt(now);
 
         return rentalRepository.save(rental);
+    }
+    public Optional<Rental> updateRental(
+    Long id,
+    RentalUpdateInput input,
+    User user
+    ) {
+
+        Optional<Rental> optionalRental = rentalRepository.findById(id);
+
+        if (optionalRental.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Rental rental = optionalRental.get();
+
+        if (!rental.getOwner().getId().equals(user.getId())) {
+            throw new AccessDeniedException(
+                "You are not allowed to update this rental"
+            );
+        }
+
+        rental.setName(input.getName());
+        rental.setSurface(input.getSurface());
+        rental.setPrice(input.getPrice());
+        rental.setDescription(input.getDescription());
+        rental.setUpdatedAt(LocalDateTime.now());
+
+        return Optional.of(
+            rentalRepository.save(rental)
+        );
     }
 }

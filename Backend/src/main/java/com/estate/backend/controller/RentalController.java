@@ -2,7 +2,6 @@ package com.estate.backend.controller;
 
 import com.estate.backend.dto.RentalsPayload;
 import com.estate.backend.service.RentalService;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import com.estate.backend.dto.RentalUpdateInput;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/api/rentals")
@@ -56,5 +57,23 @@ public class RentalController {
         return ResponseEntity.ok(
             new RentalResponse("Rental created !")
         );
+    }
+    @PutMapping(
+    value = "/{id}",
+    consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
+    public ResponseEntity<RentalResponse> updateRental(
+        @PathVariable Long id,
+        @Valid @ModelAttribute RentalUpdateInput input,
+        @AuthenticationPrincipal User user
+    ) {
+
+        return rentalService.updateRental(id, input, user)
+            .map(rental -> ResponseEntity.ok(
+                new RentalResponse("Rental updated !")
+            ))
+            .orElseGet(() ->
+                ResponseEntity.notFound().build()
+            );
     }
 }
