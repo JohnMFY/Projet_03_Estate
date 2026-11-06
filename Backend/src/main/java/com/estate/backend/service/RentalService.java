@@ -1,16 +1,27 @@
 package com.estate.backend.service;
 
+// DTO Rental
 import com.estate.backend.dto.RentalPayload;
+import com.estate.backend.dto.RentalCreateInput;
+import com.estate.backend.dto.RentalUpdateInput;
+
+// Entity et BDD
 import com.estate.backend.entity.Rental;
+import com.estate.backend.entity.User;
 import com.estate.backend.repository.RentalRepository;
+
+// Service Spring
 import org.springframework.stereotype.Service;
+
+// Gestion des autorisations
+import org.springframework.security.access.AccessDeniedException;
+
+// Dates
+import java.time.LocalDateTime;
+
+// Liste et résultat présent ou vide
 import java.util.List;
 import java.util.Optional;
-import com.estate.backend.dto.RentalCreateInput;
-import com.estate.backend.entity.User;
-import java.time.LocalDateTime;
-import com.estate.backend.dto.RentalUpdateInput;
-import org.springframework.security.access.AccessDeniedException;
 
 @Service
 public class RentalService {
@@ -60,7 +71,7 @@ public class RentalService {
         rental.setSurface(input.getSurface());
         rental.setPrice(input.getPrice());
 
-        rental.setPicture(//min IO next
+        rental.setPicture(// Stockage du nom de l'image - MinIO à ajouter
             input.getPicture().getOriginalFilename()
         );
 

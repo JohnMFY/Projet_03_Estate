@@ -1,15 +1,24 @@
 package com.estate.backend.service;
 
+// DTO Message
 import com.estate.backend.dto.MessageInput;
+
+// Entity
 import com.estate.backend.entity.Message;
 import com.estate.backend.entity.Rental;
 import com.estate.backend.entity.User;
+
+// Repository
 import com.estate.backend.repository.MessageRepository;
 import com.estate.backend.repository.RentalRepository;
 
+// Service Spring
 import org.springframework.stereotype.Service;
 
+// Dates
 import java.time.LocalDateTime;
+
+// Gestion retour resultat vide ou présent
 import java.util.Optional;
 
 @Service

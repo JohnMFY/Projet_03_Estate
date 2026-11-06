@@ -1,12 +1,21 @@
 package com.estate.backend.service;
 
+// DTO Auth
 import com.estate.backend.dto.LoginInput;
+import com.estate.backend.dto.RegisterInput;
+
+// User et BDD
 import com.estate.backend.entity.User;
 import com.estate.backend.repository.UserRepository;
+
+// Gestion auth / password
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+// Service Spring
 import org.springframework.stereotype.Service;
-import com.estate.backend.dto.RegisterInput;
+
+// Dates
 import java.time.LocalDateTime;
 
 @Service

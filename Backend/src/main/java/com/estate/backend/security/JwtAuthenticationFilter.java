@@ -1,19 +1,27 @@
 package com.estate.backend.security;
 
+// User et BDD
 import com.estate.backend.entity.User;
 import com.estate.backend.repository.UserRepository;
 
+// Gestion JWT
 import io.jsonwebtoken.JwtException;
+
+// Gestion requête / réponse
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+// Auth Spring
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+// Filtre Spring
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+// Utils
 import java.io.IOException;
 import java.util.Collections;
 

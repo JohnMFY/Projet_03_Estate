@@ -1,9 +1,15 @@
 package com.estate.backend.controller;
 
+// DTO User
 import com.estate.backend.dto.UserPayload;
+
+// Service User
 import com.estate.backend.service.UserService;
 
+// Gestion des réponses HTTP
 import org.springframework.http.ResponseEntity;
+
+// Routes
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

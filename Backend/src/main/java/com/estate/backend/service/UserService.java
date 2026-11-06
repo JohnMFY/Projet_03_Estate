@@ -1,11 +1,16 @@
 package com.estate.backend.service;
 
+// DTO User
 import com.estate.backend.dto.UserPayload;
+
+// User et BDD
 import com.estate.backend.entity.User;
 import com.estate.backend.repository.UserRepository;
 
+// Service Spring
 import org.springframework.stereotype.Service;
 
+// Gestion retour resultat vide ou présent
 import java.util.Optional;
 
 @Service
