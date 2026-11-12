@@ -101,7 +101,7 @@ public class RentalService {
 
         if (!rental.getOwner().getId().equals(user.getId())) {
             throw new AccessDeniedException(
-                "You are not allowed to update this rental"
+                "Vous n'êtes pas autorisé à modifier cette location"
             );
         }
 

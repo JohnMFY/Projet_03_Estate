@@ -35,10 +35,10 @@ public class AuthService {
     public User authenticate(LoginInput input) {
 
         User user = userRepository.findByEmail(input.getEmail())
-            .orElseThrow(() -> new BadCredentialsException("Invalid credentials"));
+            .orElseThrow(() -> new BadCredentialsException("Email ou mot de passe incorrect"));
 
         if (!passwordEncoder.matches(input.getPassword(), user.getPassword())) {
-            throw new BadCredentialsException("Invalid credentials");
+            throw new BadCredentialsException("Email ou mot de passe incorrect");
         }
 
         return user;
@@ -47,7 +47,7 @@ public class AuthService {
     public User register(RegisterInput input) {
 
         if (userRepository.existsByEmail(input.getEmail())) {
-            throw new IllegalArgumentException("Email already exists");
+            throw new IllegalArgumentException("Cette adresse e-mail est déjà utilisée");
         }
 
         User user = new User();
