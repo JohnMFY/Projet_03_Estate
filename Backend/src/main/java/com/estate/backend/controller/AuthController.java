@@ -40,7 +40,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthPayload> login(@RequestBody LoginInput input) {
+    public ResponseEntity<AuthPayload> login(@Valid @RequestBody LoginInput input) {
 
         User user = authService.authenticate(input);
 
