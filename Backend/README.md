@@ -2,7 +2,7 @@
 
 Backend de l'application Estate développé avec Spring Boot.
 
-L'API permet de gérer l'authentification des utilisateurs, les locations, les messages et le stockage des images avec AWS S3.
+L'API permet de gérer l'authentification des utilisateurs, les locations et les messages. Le stockage des images est assuré par AWS S3.
 
 ## Technologies utilisées
 
@@ -63,7 +63,7 @@ $env:AWS_REGION="eu-west-3"
 $env:AWS_S3_BUCKET="NOM_DU_BUCKET"
 ```
 
-Les images sont stocké dans un bucket AWS S3 privé. L'API génère ensuite une URL temporaire permettant au frontend d'afficher les images.
+Les images sont stockées dans un bucket AWS S3 privé.
 
 ## Lancement du backend
 
@@ -136,20 +136,6 @@ La taille maximale autorisée est de :
 ```
 10 MB
 ```
-Possibilité de modifier la taille max dans application.properties.
+La taille maximale peut être modifiée dans `application.properties`.
 
 Les images sont stockés sur AWS S3.
-
-## Base de données
-
-Le projet utilise PostgreSQL avec JPA / Hibernate.
-
-Configuration principale :
-
-```
-Base : estate
-Port : 5432
-Utilisateur : postgres
-```
-
-Hibernate met à jour automatiquement le schéma de la base de données au lancement de l'application.
