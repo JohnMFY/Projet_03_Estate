@@ -76,7 +76,7 @@ public class ErrorHandler {
     ) {
 
         return ResponseEntity
-            .status(HttpStatus.PAYLOAD_TOO_LARGE)
+            .status(HttpStatus.CONTENT_TOO_LARGE)
             .body(new ErrorResponse("Le fichier est trop volumineux."));
     }
 }

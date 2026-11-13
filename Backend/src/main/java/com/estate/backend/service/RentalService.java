@@ -27,9 +27,14 @@ import java.util.Optional;
 public class RentalService {
 
     private final RentalRepository rentalRepository;
+    private final S3Service s3Service;
 
-    public RentalService(RentalRepository rentalRepository) {
+    public RentalService(
+        RentalRepository rentalRepository,
+        S3Service s3Service
+    ) {
         this.rentalRepository = rentalRepository;
+        this.s3Service = s3Service;
     }
 
     public List<RentalPayload> getAllRentals() {
@@ -47,7 +52,9 @@ public class RentalService {
             rental.getName(),
             rental.getSurface(),
             rental.getPrice(),
-            rental.getPicture(),
+            s3Service.getFileUrl(
+                rental.getPicture()
+            ),
             rental.getDescription(),
             rental.getOwner().getId().intValue(),
             rental.getCreatedAt() != null ? rental.getCreatedAt().toString() : null,
@@ -71,9 +78,11 @@ public class RentalService {
         rental.setSurface(input.getSurface());
         rental.setPrice(input.getPrice());
 
-        rental.setPicture(// Stockage du nom de l'image - MinIO à ajouter
-            input.getPicture().getOriginalFilename()
+       String pictureName = s3Service.uploadFile(
+            input.getPicture()
         );
+
+        rental.setPicture(pictureName);
 
         rental.setDescription(input.getDescription());
         rental.setOwner(owner);
